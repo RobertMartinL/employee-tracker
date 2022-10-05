@@ -52,10 +52,18 @@ const addDepartment = () => {
     return inquirer.prompt([
         {
             type: 'input',
-            name: 'department-name',
+            name: 'name',
             message: 'What is the name of the department to be added?'
         }
     ])
+    .then(department => {
+        console.log(department)
+        // return db.promise().query(`INSERT INTO departments SET ?`, department.name)
+        return db.promise().query(`INSERT INTO departments (name)
+        VALUES (department)`)
+    }).then(() => {
+        promptMenu()
+    })
 };
 
 const addRole = () => {
