@@ -60,7 +60,7 @@ const addDepartment = () => {
         console.log(department)
         // return db.promise().query(`INSERT INTO departments SET ?`, department.name)
         return db.promise().query(`INSERT INTO departments (name)
-        VALUES (department)`)
+        VALUES ('${department.name}')`)
     }).then(() => {
         promptMenu()
     })
@@ -81,9 +81,48 @@ const addRole = () => {
         {
             type: 'input',
             name: 'department',
-            message: 'Which department will this role belong to?'
+            message: 'Which department(by ID) will this role belong to?'
         }
     ])
+    .then(role => {
+        console.log(role)
+        return db.promise().query(`INSERT INTO roles (title, salary, department_id)
+        VALUES ('${role.title}', '${role.salary}', '${role.department}')`)
+    }).then(() => {
+        promptMenu()
+    })
+};
+
+const addEmployee = () => {
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'first',
+            message: 'What is the first name of the employee to be added?'
+        },
+        {
+            type: 'input',
+            name: 'last',
+            message: 'What is the last name of the employee to be added?'
+        },
+        {
+            type: 'input',
+            name: 'role',
+            message: 'What is the role/title ID of the new employee?'
+        },
+        {
+            type: 'input',
+            name: 'manager',
+            message: 'What is the overseeing managers employee ID?'
+        }
+    ])
+    .then(emp => {
+        console.log(emp)
+        return db.promise().query(`INSERT INTO employees (first_name, last_name, role_id, manager_id)
+        VALUES ('${emp.first}', '${emp.lst}', '${emp.role}', '${emp.manager}')`)
+    }).then(() => {
+        promptMenu()
+    })
 };
 
 promptMenu();
