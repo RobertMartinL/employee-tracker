@@ -114,12 +114,22 @@ const addEmployee = () => {
             type: 'input',
             name: 'manager',
             message: 'What is the overseeing managers employee ID?'
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message: 'What is this employees salary?'
+        },
+        {
+            type: 'input',
+            name: 'department',
+            message: 'What is the department ID of the employee?'
         }
     ])
     .then(emp => {
         console.log(emp)
-        return db.promise().query(`INSERT INTO employees (first_name, last_name, role_id, manager_id)
-        VALUES ('${emp.first}', '${emp.lst}', '${emp.role}', '${emp.manager}')`)
+        return db.promise().query(`INSERT INTO employees (first_name, last_name, role_id, salary, manager_id, department_id)
+        VALUES ('${emp.first}', '${emp.last}', '${emp.role}', '${emp.manager}', '${emp.salary}', '${emp.department}')`)
     }).then(() => {
         promptMenu()
     })
